@@ -1,0 +1,22 @@
+{"time": "2025-03-04 07:16:01,159", "level": "INFO", "module": "autoreload", "message": "Watching for file changes with StatReloader"}
+{"time": "2025-03-04 07:22:13,062", "level": "INFO", "module": "basehttp", "message": ""GET / HTTP/1.1" 200 10697"}
+{"time": "2025-03-04 07:22:13,071", "level": "INFO", "module": "basehttp", "message": ""GET /static/admin/css/fonts.css HTTP/1.1" 200 423"}
+{"time": "2025-03-04 07:22:13,119", "level": "INFO", "module": "basehttp", "message": ""GET /static/admin/fonts/Roboto-Regular-webfont.woff HTTP/1.1" 200 85876"}
+{"time": "2025-03-04 07:22:13,125", "level": "INFO", "module": "basehttp", "message": ""GET /static/admin/fonts/Roboto-Bold-webfont.woff HTTP/1.1" 200 86184"}
+{"time": "2025-03-04 07:22:13,126", "level": "INFO", "module": "basehttp", "message": ""GET /static/admin/fonts/Roboto-Light-webfont.woff HTTP/1.1" 200 85692"}
+{"time": "2025-03-04 07:22:13,141", "level": "WARNING", "module": "log", "message": "Not Found: /apple-touch-icon-precomposed.png"}
+{"time": "2025-03-04 07:22:13,141", "level": "WARNING", "module": "basehttp", "message": ""GET /apple-touch-icon-precomposed.png HTTP/1.1" 404 2173"}
+{"time": "2025-03-04 07:22:13,144", "level": "WARNING", "module": "log", "message": "Not Found: /apple-touch-icon.png"}
+{"time": "2025-03-04 07:22:13,144", "level": "WARNING", "module": "basehttp", "message": ""GET /apple-touch-icon.png HTTP/1.1" 404 2137"}
+{"time": "2025-03-04 07:22:15,381", "level": "INFO", "module": "basehttp", "message": ""GET / HTTP/1.1" 200 10697"}
+{"time": "2025-03-04 07:22:39,775", "level": "INFO", "module": "basehttp", "message": ""GET / HTTP/1.1" 200 10697"}
+{"time": "2025-03-04 07:47:55,160", "level": "INFO", "module": "basehttp", "message": ""GET / HTTP/1.1" 200 10697"}
+{"time": "2025-03-04 07:47:55,173", "level": "INFO", "module": "basehttp", "message": ""GET /static/admin/css/fonts.css HTTP/1.1" 304 0"}
+{"time": "2025-03-04 07:47:55,222", "level": "INFO", "module": "basehttp", "message": ""GET /static/admin/fonts/Roboto-Regular-webfont.woff HTTP/1.1" 304 0"}
+{"time": "2025-03-04 07:47:55,233", "level": "INFO", "module": "basehttp", "message": ""GET /static/admin/fonts/Roboto-Bold-webfont.woff HTTP/1.1" 304 0"}
+{"time": "2025-03-04 07:47:55,233", "level": "INFO", "module": "basehttp", "message": ""GET /static/admin/fonts/Roboto-Light-webfont.woff HTTP/1.1" 304 0"}
+{"time": "2025-03-04 07:47:55,772", "level": "INFO", "module": "basehttp", "message": ""GET / HTTP/1.1" 200 10697"}
+{"time": "2025-03-04 07:47:57,755", "level": "INFO", "module": "basehttp", "message": ""GET /admin/django_celery_beat/intervalschedule/ HTTP/1.1" 302 0"}
+{"time": "2025-03-04 07:47:57,786", "level": "INFO", "module": "basehttp", "message": ""GET /admin/login/?next=/admin/django_celery_beat/intervalschedule/ HTTP/1.1" 200 2286"}
+{"time": "2025-03-04 07:47:57,798", "level": "INFO", "module": "basehttp", "message": ""GET /static/admin/css/responsive.css HTTP/1.1" 200 18545"}
+{"time": "2025-03-04 07:47:57,799", "level": "INFO", "module": "basehttp", "message": ""GET /static/admin/css/base.css HTTP/1.1" 200 19513"}

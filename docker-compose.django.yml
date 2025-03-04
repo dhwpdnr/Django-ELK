@@ -8,6 +8,7 @@ services:
       - "8000:8000"
     volumes:
       - ./app:/app
+      - ./logs:/app/logs
     command: >
       sh -c "
       python manage.py wait_for_db &&
@@ -19,8 +20,12 @@ services:
       - DB_NAME=devdb
       - DB_USER=devuser
       - DB_PASS=changeme
+      - LOG_FILE_PATH=/app/logs/django.jsonl
     depends_on:
       - db
+    networks:
+      - django-elk-network
+
 
   db:
     image: postgres:13-alpine
@@ -30,7 +35,12 @@ services:
       - POSTGRES_DB=devdb
       - POSTGRES_USER=devuser
       - POSTGRES_PASSWORD=changeme
+    networks:
+      - django-elk-network
 
+networks:
+  django-elk-network:
+    external: true
 
 
 volumes:
