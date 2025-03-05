@@ -8,6 +8,8 @@ services:
       - discovery.type=single-node
       - xpack.security.enabled=false  # 보안 비활성화 (HTTPS 비활성화)
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    volumes:
+      - elasticsearch-data:/usr/share/elasticsearch/data
     ports:
       - "9200:9200"
     networks:
@@ -18,7 +20,7 @@ services:
     container_name: logstash
     volumes:
       - ./logstash.conf:/usr/share/logstash/pipeline/logstash.conf
-      - ./logs:/app/logs  # Django의 로그를 읽기 위해 공유
+      - ./logs:/app/logs
     depends_on:
       - elasticsearch
     ports:
@@ -38,5 +40,8 @@ services:
       - django-elk-network
 
 networks:
-  django-elk-network: # Django와 같은 네트워크 사용
+  django-elk-network:
     external: true
+
+volumes:
+  elasticsearch-data:

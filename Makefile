@@ -9,6 +9,9 @@ up: setup-network
 down:
 	docker-compose -f docker-compose.django.yml down
 
+restart:
+	docker-compose -f docker-compose.django.yml down && docker-compose -f docker-compose.django.yml up -d
+
 build:
 	docker-compose -f docker-compose.django.yml up --build -d
 

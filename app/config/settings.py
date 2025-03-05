@@ -112,9 +112,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ko-kr'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = "Asia/Seoul"
 
 USE_I18N = True
 
@@ -133,6 +133,26 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 import json
+import logging
+import logging.handlers
+
+
+class JSONFormatter(logging.Formatter):
+    def format(self, record):
+        log_record = {
+            "time": self.formatTime(record, "%Y-%m-%dT%H:%M:%S"),
+            "level": record.levelname,
+            "module": record.module,
+            "message": record.getMessage(),
+        }
+        return json.dumps(log_record, ensure_ascii=False)
+
+
+class JSONSocketHandler(logging.handlers.SocketHandler):
+    """JSON을 TCP로 전송하도록 설정 (Pickle 사용 금지)"""
+
+    def makePickle(self, record):
+        return (self.format(record) + "\n").encode("utf-8")  # ✅ JSON 문자열을 UTF-8로 인코딩
 
 
 LOGGING = {
@@ -140,26 +160,21 @@ LOGGING = {
     'disable_existing_loggers': False,
     'formatters': {
         'json': {
-            'format': json.dumps({
-                "time": "%(asctime)s",
-                "level": "%(levelname)s",
-                "module": "%(module)s",
-                "message": "%(message)s"
-            }),
-            'style': '%'
+            '()': JSONFormatter,
         },
     },
     'handlers': {
-        'file': {
+        'tcp': {
             'level': 'INFO',
-            'class': 'logging.FileHandler',
-            'filename': os.path.join(os.path.dirname(os.path.dirname(__file__)), 'logs', 'django.jsonl'),
+            'class': 'config.settings.JSONSocketHandler',
+            'host': 'logstash',
+            'port': 5044,
             'formatter': 'json',
         },
     },
     'loggers': {
         'django': {
-            'handlers': ['file'],
+            'handlers': ['tcp'],
             'level': 'INFO',
             'propagate': True,
         },
