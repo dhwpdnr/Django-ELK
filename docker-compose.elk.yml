@@ -6,7 +6,8 @@ services:
     container_name: elasticsearch
     environment:
       - discovery.type=single-node
-      - xpack.security.enabled=false  # 보안 비활성화 (HTTPS 비활성화)
+      - xpack.security.enabled=false
+      - xpack.security.authc.api_key.enabled=true
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
     volumes:
       - elasticsearch-data:/usr/share/elasticsearch/data
@@ -23,6 +24,8 @@ services:
       - ./logs:/app/logs
     depends_on:
       - elasticsearch
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
     ports:
       - "5044:5044"
       - "9600:9600"
@@ -34,8 +37,25 @@ services:
     container_name: kibana
     depends_on:
       - elasticsearch
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
     ports:
       - "5601:5601"
+    networks:
+      - django-elk-network
+
+  apm-server:
+    image: docker.elastic.co/apm/apm-server:8.5.1
+    container_name: apm-server
+    depends_on:
+      - elasticsearch
+    command: >
+      apm-server -e
+        -E output.elasticsearch.hosts=["http://elasticsearch:9200"]
+        -E apm-server.secret_token=""
+        -E apm-server.enabled=true
+    ports:
+      - "8200:8200"
     networks:
       - django-elk-network
 
