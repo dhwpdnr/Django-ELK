@@ -6,7 +6,7 @@ services:
     container_name: elasticsearch
     environment:
       - discovery.type=single-node
-      - xpack.security.enabled=false
+      - xpack.security.enabled=true
       - xpack.security.authc.api_key.enabled=true
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
     volumes:
@@ -39,6 +39,8 @@ services:
       - elasticsearch
     environment:
       - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+      - ELASTICSEARCH_USERNAME=kibana_system  # 🔹 Elasticsearch에 추가한 계정
+      - ELASTICSEARCH_PASSWORD=kibanapass123
     ports:
       - "5601:5601"
     networks:
@@ -49,15 +51,19 @@ services:
     container_name: apm-server
     depends_on:
       - elasticsearch
+      - kibana
     command: >
       apm-server -e
         -E output.elasticsearch.hosts=["http://elasticsearch:9200"]
         -E apm-server.secret_token=""
-        -E apm-server.enabled=true
+        -E apm-server.kibana.enabled=true
+        -E apm-server.kibana.host=http://kibana:5601
+        -E apm-server.rum.enabled=true
     ports:
       - "8200:8200"
     networks:
       - django-elk-network
+
 
 networks:
   django-elk-network:

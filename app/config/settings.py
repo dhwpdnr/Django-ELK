@@ -53,6 +53,7 @@ LOCAL_APPS = [
 INSTALLED_APPS = SYSTEM_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
 MIDDLEWARE = [
+    'elasticapm.contrib.django.middleware.TracingMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -61,7 +62,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'config.middleware.ThreadLocalRequestMiddleware',
-    'elasticapm.contrib.django.middleware.TracingMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -210,40 +210,3 @@ class JSONSocketHandler(logging.handlers.SocketHandler):
 
     def makePickle(self, record):
         return (self.format(record) + "\n").encode("utf-8")
-
-
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'formatters': {
-        'json': {
-            '()': JSONFormatter,
-        },
-    },
-    'filters': {
-        'request_filter': {
-            '()': RequestFilter,
-        },
-    },
-    'handlers': {
-        'tcp': {  # Logstash로 로그 전송 (TCP)
-            'level': 'INFO',
-            'class': 'config.settings.JSONSocketHandler',
-            'host': 'logstash',
-            'port': 5044,
-            'formatter': 'json',
-            'filters': ['request_filter'],
-        },
-        "apm": {  # Elastic APM 로그 핸들러
-            "level": "INFO",
-            "class": "elasticapm.handlers.logging.LoggingHandler",
-        }
-    },
-    'loggers': {
-        'django': {
-            'handlers': ["apm", 'tcp'],
-            'level': 'INFO',
-            'propagate': True,
-        },
-    },
-}
