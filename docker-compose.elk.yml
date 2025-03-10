@@ -39,7 +39,7 @@ services:
       - elasticsearch
     environment:
       - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
-      - ELASTICSEARCH_USERNAME=kibana_system  # 🔹 Elasticsearch에 추가한 계정
+      - ELASTICSEARCH_USERNAME=kibana_system
       - ELASTICSEARCH_PASSWORD=kibanapass123
     ports:
       - "5601:5601"
@@ -55,10 +55,14 @@ services:
     command: >
       apm-server -e
         -E output.elasticsearch.hosts=["http://elasticsearch:9200"]
+        -E output.elasticsearch.username=apm_system  
+        -E output.elasticsearch.password=lc_x3VEFISLYjwef_YDQ
         -E apm-server.secret_token=""
         -E apm-server.kibana.enabled=true
         -E apm-server.kibana.host=http://kibana:5601
         -E apm-server.rum.enabled=true
+        -E apm-server.kibana.username=elastic  
+        -E apm-server.kibana.password=0XZhkSTXo4=DpLxClFyq
     ports:
       - "8200:8200"
     networks:
