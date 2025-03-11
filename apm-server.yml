@@ -1,0 +1,50 @@
+apm-server:
+  host: "0.0.0.0:8200"
+
+  secret_token: "mysecret"
+
+  kibana:
+    enabled: true
+    host: "http://kibana:5601"
+    username: "apm_server_user"
+    password: "apmuserpass123"
+
+  rum:
+    enabled: true
+    allow_origins: [ "*" ]
+
+
+
+output.elasticsearch:
+  hosts: [ "http://elasticsearch:9200" ]
+  username: "apm_server_user"
+  password: "apmuserpass123"
+  indices:
+    - index: "apm-transaction-%{+yyyy.MM.dd}"
+      when.contains:
+        processor.event: "transaction"
+
+    - index: "apm-span-%{+yyyy.MM.dd}"
+      when.contains:
+        processor.event: "span"
+
+    - index: "apm-error-%{+yyyy.MM.dd}"
+      when.contains:
+        processor.event: "error"
+
+    - index: "apm-metric-%{+yyyy.MM.dd}"
+      when.contains:
+        processor.event: "metric"
+
+setup.template.settings:
+  index.number_of_shards: 1
+  index.number_of_replicas: 1
+
+logging:
+  level: info
+  to_files: true
+  files:
+    path: "/var/log/apm-server"
+    name: "apm-server"
+    keepfiles: 7
+    permissions: 0644
