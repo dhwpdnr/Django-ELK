@@ -1,24 +1,10 @@
 apm-server:
   host: "0.0.0.0:8200"
-
-  secret_token: "mysecret"
-
-  kibana:
-    enabled: true
-    host: "http://kibana:5601"
-    username: "apm_server_user"
-    password: "apmuserpass123"
-
   rum:
     enabled: true
     allow_origins: [ "*" ]
 
-
-
 output.elasticsearch:
-  hosts: [ "http://elasticsearch:9200" ]
-  username: "apm_server_user"
-  password: "apmuserpass123"
   indices:
     - index: "apm-transaction-%{+yyyy.MM.dd}"
       when.contains:
