@@ -69,7 +69,7 @@ APM_ELASTICSEARCH_HOST=http://elasticsearch:9200
 
 ```bash
 # Linux / macOS
-make all up # Docker Compose 실행
+make all-up # Docker Compose 실행
 
 # Windows
 docker-compose -f docker-compose.django.yml up -d
