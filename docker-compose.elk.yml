@@ -28,6 +28,7 @@ services:
       timeout: 5s
     entrypoint: [ "/bin/bash", "-c", "/usr/local/bin/docker-entrypoint.sh & sleep 10 && /usr/local/bin/init-elasticsearch.sh && wait" ]
 
+
   logstash:
     image: docker.elastic.co/logstash/logstash:7.17.10
     container_name: logstash

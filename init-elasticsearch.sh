@@ -1,11 +1,5 @@
 #!/bin/bash
 
-
-echo "ELASTIC_PASSWORD : ${ELASTIC_PASSWORD}"
-echo "Logstash Password: ${LOGSTASH_PASSWORD}"
-echo "Kibana Password: ${KIBANA_PASSWORD}"
-echo "APM Server Password: ${APM_SERVER_PASSWORD}"
-
 echo "Elasticsearch 초기 설정을 시작합니다..."
 
 # Elasticsearch가 정상적으로 실행될 때까지 대기

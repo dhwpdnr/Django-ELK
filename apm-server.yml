@@ -3,28 +3,44 @@ apm-server:
   rum:
     enabled: true
     allow_origins: [ "*" ]
+    profiling:
+      enabled: true
 
 output.elasticsearch:
   indices:
-    - index: "apm-transaction-%{+yyyy.MM.dd}"
+    - index: "apm-7.17.10-transaction-%{+yyyy.MM.dd}"
       when.contains:
         processor.event: "transaction"
 
-    - index: "apm-span-%{+yyyy.MM.dd}"
+    - index: "apm-7.17.10-span-%{+yyyy.MM.dd}"
       when.contains:
         processor.event: "span"
 
-    - index: "apm-error-%{+yyyy.MM.dd}"
+    - index: "apm-7.17.10-error-%{+yyyy.MM.dd}"
       when.contains:
         processor.event: "error"
 
-    - index: "apm-metric-%{+yyyy.MM.dd}"
+    - index: "apm-7.17.10-metric-%{+yyyy.MM.dd}"
       when.contains:
         processor.event: "metric"
+
+    - index: "apm-7.17.10-profile-%{+yyyy.MM.dd}"
+      when.contains:
+        processor.event: "profile"
+
 
 setup.template.settings:
   index.number_of_shards: 1
   index.number_of_replicas: 1
+
+setup.template.mappings:
+  properties:
+    service.name:
+      type: keyword
+    service.environment:
+      type: keyword
+    processor.event:
+      type: keyword
 
 logging:
   level: info

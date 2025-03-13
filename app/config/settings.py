@@ -50,6 +50,7 @@ LOCAL_APPS = [
 INSTALLED_APPS = SYSTEM_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
 MIDDLEWARE = [
+    'elasticapm.contrib.django.middleware.TracingMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -58,7 +59,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'config.middleware.ThreadLocalRequestMiddleware',
-    'elasticapm.contrib.django.middleware.TracingMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -71,6 +71,7 @@ ELASTIC_APM = {
     "CAPTURE_BODY": "all",  # 요청 본문 캡처 (all, errors, off)
     "TRANSACTIONS_IGNORE_PATTERNS": ["^OPTIONS "],  # 특정 패턴 제외 가능
     'DEBUG': True,  # 디버깅 활성화
+    'PROFILING_ENABLED': True,  # 프로파일링 활성화
 }
 
 TEMPLATES = [
