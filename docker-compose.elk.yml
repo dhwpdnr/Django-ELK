@@ -9,9 +9,13 @@ services:
       - xpack.security.enabled=true
       - xpack.security.http.ssl.enabled=false
       - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
+      - LOGSTASH_PASSWORD=${LOGSTASH_PASSWORD}
+      - KIBANA_PASSWORD=${KIBANA_PASSWORD}
+      - APM_SERVER_PASSWORD=${APM_SERVER_PASSWORD}
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
     volumes:
       - elasticsearch-data:/usr/share/elasticsearch/data
+      - ./init-elasticsearch.sh:/usr/local/bin/init-elasticsearch.sh
     ports:
       - "9200:9200"
     networks:
@@ -22,6 +26,7 @@ services:
       retries: 5
       start_period: 10s
       timeout: 5s
+    entrypoint: [ "/bin/bash", "-c", "/usr/local/bin/docker-entrypoint.sh & sleep 10 && /usr/local/bin/init-elasticsearch.sh && wait" ]
 
   logstash:
     image: docker.elastic.co/logstash/logstash:7.17.10
@@ -90,22 +95,6 @@ services:
       - "8200:8200"
     networks:
       - django-elk-network
-
-#  apm-server:
-#    image: docker.elastic.co/apm/apm-server:7.17.10
-#    container_name: apm-server
-#    depends_on:
-#      elasticsearch:
-#        condition: service_healthy
-#      kibana:
-#        condition: service_healthy
-#    volumes:
-#      - ./apm-server.yml:/usr/share/apm-server/apm-server.yml
-#    command: [ "apm-server", "-e", "--strict.perms=false" ]
-#    ports:
-#      - "8200:8200"
-#    networks:
-#      - django-elk-network
 
 networks:
   django-elk-network:
