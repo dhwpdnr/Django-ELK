@@ -46,6 +46,7 @@ THIRD_PARTY_APPS = [
 LOCAL_APPS = [
     "core",
     "errors",
+    "todo",
 ]
 
 INSTALLED_APPS = SYSTEM_APPS + THIRD_PARTY_APPS + LOCAL_APPS
