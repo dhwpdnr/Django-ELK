@@ -26,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv("SECRET_KEY")
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 # Application definition
 SYSTEM_APPS = [
@@ -45,6 +45,7 @@ THIRD_PARTY_APPS = [
 
 LOCAL_APPS = [
     "core",
+    "errors",
 ]
 
 INSTALLED_APPS = SYSTEM_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -65,13 +66,14 @@ ROOT_URLCONF = 'config.urls'
 
 ELASTIC_APM = {
     "SERVICE_NAME": "DjangoTestApp",  # Kibana에서 식별할 서비스 이름
-    'SECRET_TOKEN': 'mysecret',  # APM Server와 동일한 secret_token 사용
+    "SECRET_TOKEN": "mysecret",  # APM Server와 동일한 secret_token 사용
     "SERVER_URL": "http://apm-server:8200",  # APM 서버 주소
     "ENVIRONMENT": "development",  # 개발/운영 환경 설정
     "CAPTURE_BODY": "all",  # 요청 본문 캡처 (all, errors, off)
     "TRANSACTIONS_IGNORE_PATTERNS": ["^OPTIONS "],  # 특정 패턴 제외 가능
-    'DEBUG': True,  # 디버깅 활성화
-    'PROFILING_ENABLED': True,  # 프로파일링 활성화
+    "DJANGO_TRANSACTION_NAME_FROM_ROUTE": True,  # 라우트 기반 트랜잭션 이름 설정
+    "DEBUG": True,  # 디버깅 활성화
+    "PROFILING_ENABLED": True,  # 프로파일링 활성화
 }
 
 TEMPLATES = [
